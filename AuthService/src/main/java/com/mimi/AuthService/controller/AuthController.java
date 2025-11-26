@@ -24,7 +24,7 @@ public class AuthController {
 
         LoginResponse response = authService.login(request.getEmail(), request.getPassword());
 
-        if (!response.isSuccess()){ 
+        if (!response.isSuccess()) { 
             return ResponseEntity.badRequest().body(response);
         }
 
@@ -33,7 +33,7 @@ public class AuthController {
         }
 
         return ResponseEntity.ok(response);
-    }    
+    }   
         
 }
 

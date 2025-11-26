@@ -28,25 +28,20 @@ public class AuthService {
                     UserAuthDTO.class
             );
 
-            // Si UserService responde null → credenciales inválidas
             if (usuario == null) {
                 return new LoginResponse(
-                    false,
-                    "Credenciales inválidas",
-                    null,
-                    null
+                        true,
+                        "Credenciales inválidas",
+                        null,
+                        null
                 );
             }
 
-            System.out.println("hola");
-
-            //Generar el token JWT usando correo y rol
             String token = jwtUtil.generateToken(
-                usuario.getCorreo(),
-                usuario.getRolId()
+                    usuario.getCorreo(),
+                    usuario.getRolId()
             );
 
-            // Respuesta completa con usuario + token
             return new LoginResponse(
                     true,
                     "Login exitoso",
@@ -55,21 +50,20 @@ public class AuthService {
             );
 
         } catch (HttpClientErrorException.Unauthorized e) {
-
             return new LoginResponse(
-                false,
-                "Credenciales inválidas",
-                null,
-                null
+                    true,
+                    "Credenciales inválidas",
+                    null,
+                    null
             );
 
         } catch (Exception e) {
             e.printStackTrace();
             return new LoginResponse(
-                false,
-                "Error conectando a UserService",
-                null,
-                null
+                    false,
+                    "Error conectando a UserService",
+                    null,
+                    null
             );
         }
     }
