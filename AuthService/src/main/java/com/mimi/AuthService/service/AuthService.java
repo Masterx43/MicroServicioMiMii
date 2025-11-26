@@ -38,6 +38,8 @@ public class AuthService {
                 );
             }
 
+            System.out.println("hola");
+
             //Generar el token JWT usando correo y rol
             String token = jwtUtil.generateToken(
                 usuario.getCorreo(),

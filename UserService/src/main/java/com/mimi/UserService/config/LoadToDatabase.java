@@ -3,6 +3,7 @@ package com.mimi.UserService.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.mimi.UserService.model.Rol;
 import com.mimi.UserService.model.User;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @RequiredArgsConstructor
 public class LoadToDatabase {
+
+        private final PasswordEncoder passwordEncoder;
 
     @Bean
     CommandLineRunner initDatabase(RoleRepository rolRepo, UserRepository userRepo) {
@@ -52,7 +55,7 @@ public class LoadToDatabase {
                         .apellido("Principal")
                         .correo("admin@mimi.cl")
                         .phone("999999999")
-                        .password("1234")
+                        .password(passwordEncoder.encode("1234"))
                         .rol(admin)
                         .build());
 
@@ -61,7 +64,7 @@ public class LoadToDatabase {
                         .apellido("Principal")
                         .correo("cliente@mimi.cl")
                         .phone("999999999")
-                        .password("1234")
+                        .password(passwordEncoder.encode("1234"))
                         .rol(cliente)
                         .build());
                 
@@ -71,7 +74,7 @@ public class LoadToDatabase {
                         .apellido("Principal")
                         .correo("trabajador1@mimi.cl")
                         .phone("999999999")
-                        .password("1234")
+                        .password(passwordEncoder.encode("1234"))
                         .rol(trabajador)
                         .build());
 
@@ -81,7 +84,7 @@ public class LoadToDatabase {
                         .apellido("Secundario")
                         .correo("trabajador2@mimi.cl")
                         .phone("999999999")
-                        .password("1234")
+                        .password(passwordEncoder.encode("1234"))
                         .rol(trabajador)
                         .build());
 
@@ -91,7 +94,7 @@ public class LoadToDatabase {
                         .apellido("Tercearios")
                         .correo("trabajador3@mimi.cl")
                         .phone("999999999")
-                        .password("1234")
+                        .password(passwordEncoder.encode("1234"))
                         .rol(trabajador)
                         .build());
                 
@@ -100,7 +103,7 @@ public class LoadToDatabase {
                         .apellido("IV")
                         .correo("trabajador4@mimi.cl")
                         .phone("999999999")
-                        .password("1234")
+                        .password(passwordEncoder.encode("1234"))
                         .rol(trabajador)
                         .build());
                 
@@ -110,7 +113,7 @@ public class LoadToDatabase {
                         .apellido("V")
                         .correo("trabajador5@mimi.cl")
                         .phone("999999999")
-                        .password("1234")
+                        .password(passwordEncoder.encode("1234"))
                         .rol(trabajador)
                         .build());
 
