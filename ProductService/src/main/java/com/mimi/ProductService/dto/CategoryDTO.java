@@ -1,4 +1,4 @@
-package ProductService.ProductService.dto;
+package com.mimi.ProductService.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

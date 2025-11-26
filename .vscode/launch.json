@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ProductServiceApplication",
+            "request": "launch",
+            "mainClass": "ProductService.ProductService.ProductServiceApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-UserServiceApplication<UserService>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

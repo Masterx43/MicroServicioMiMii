@@ -1,4 +1,4 @@
-package ProductService.ProductService.dto;
+package com.mimi.ProductService.dto;
 
 import lombok.*;
 
@@ -13,3 +13,4 @@ public class ProductDTO {
     private String imagen;
     private Long categoriaId;
 }
+

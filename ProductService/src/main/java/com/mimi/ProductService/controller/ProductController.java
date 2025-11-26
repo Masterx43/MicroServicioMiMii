@@ -1,11 +1,14 @@
-package ProductService.ProductService.controller;
+package com.mimi.ProductService.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import ProductService.ProductService.Service.ProductService;
-import ProductService.ProductService.dto.*;
+import com.mimi.ProductService.service.ProductService;
+import com.mimi.ProductService.dto.*;
+
+
+
 
 @RestController
 @RequestMapping("/api/products")

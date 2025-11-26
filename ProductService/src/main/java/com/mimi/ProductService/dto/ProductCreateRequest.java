@@ -1,12 +1,13 @@
-package ProductService.ProductService.dto;
+package com.mimi.ProductService.dto;
 
 import lombok.Data;
 
 @Data
-public class ProductUpdateRequest {
+public class ProductCreateRequest {
     private String nombre;
     private String descripcion;
     private Integer precio;
     private String imagen;
     private Long categoriaId;
 }
+

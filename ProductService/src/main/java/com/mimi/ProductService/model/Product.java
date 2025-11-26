@@ -1,4 +1,4 @@
-package ProductService.ProductService.model;
+package com.mimi.ProductService.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,3 +24,4 @@ public class Product {
     @JoinColumn(name = "categoria_id")
     private Category categoria;
 }
+

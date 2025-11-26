@@ -1,12 +1,11 @@
-package ProductService.ProductService.Service;
-
+package com.mimi.ProductService.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import ProductService.ProductService.dto.*;
-import ProductService.ProductService.repository.*;
-import ProductService.ProductService.model.*;
+import com.mimi.ProductService.dto.*;
+import com.mimi.ProductService.repository.*;
+import com.mimi.ProductService.model.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -81,3 +80,4 @@ public class ProductService {
         );
     }
 }
+

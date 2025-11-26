@@ -1,8 +1,8 @@
-package ProductService.ProductService.Service;
+package com.mimi.ProductService.service;
 
-import ProductService.ProductService.dto.CategoryDTO;
-import ProductService.ProductService.model.Category;
-import ProductService.ProductService.repository.CategoryRepository;
+import com.mimi.ProductService.dto.CategoryDTO;
+import com.mimi.ProductService.model.Category;
+import com.mimi.ProductService.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -66,3 +66,4 @@ public class CategoryService {
         );
     }
 }
+
