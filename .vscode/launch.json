@@ -1,0 +1,45 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-UserServiceApplication<UserService>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mimi.UserService.UserServiceApplication",
+            "projectName": "UserService",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AuthServiceApplication<AuthService>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mimi.AuthService.AuthServiceApplication",
+            "projectName": "AuthService",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ReservaServiceApplication<ReservaService>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mimi.ReservaService.ReservaServiceApplication",
+            "projectName": "ReservaService",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=49981 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=ReservaService"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ServicioServiceApplication<ServicioService>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mimi.ServicioService.ServicioServiceApplication",
+            "projectName": "ServicioService",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
