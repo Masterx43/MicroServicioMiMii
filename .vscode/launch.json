@@ -4,6 +4,12 @@
             "type": "java",
             "name": "ProductServiceApplication",
             "request": "launch",
+            "mainClass": "com.mimi.ProductService.ProductServiceApplication"
+        },
+        {
+            "type": "java",
+            "name": "ProductServiceApplication",
+            "request": "launch",
             "mainClass": "ProductService.ProductService.ProductServiceApplication",
             "projectName": ""
         },
@@ -45,6 +51,16 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.mimi.ServicioService.ServicioServiceApplication",
             "projectName": "ServicioService",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ProductServiceApplication<ProductService>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mimi.ProductService.ProductServiceApplication",
+            "projectName": "ProductService",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

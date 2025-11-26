@@ -1,32 +1,61 @@
 package com.mimi.AuthService.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
-@Component
+@Service
 public class JwtUtil {
 
-    private final String SECRET = "MIMI_SUPER_SECRETO_2025_MUY_LARGO_PARA_HS256";
-    private final long EXPIRATION = 1000 * 60 * 60 * 24;
+    private static final String SECRET_KEY = "supersecreto-supersecreto-supersecreto-123456";
+    private static final long EXPIRATION = 1000 * 60 * 60 * 24; // 24h
 
     private SecretKey getKey() {
-        return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+        // Clave HMAC válida para HS256
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(String email, Long roleId) {
-
+    // Genera token con email + rol
+    public String generateToken(String email, Long rolId) {
         return Jwts.builder()
-                .subject(email)
-                .claim("rol", roleId)
+                .subject(email)                 // subject = email
+                .claim("rol", rolId)            // claim extra = rol
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
-                .signWith(getKey())
+                .signWith(getKey(), SignatureAlgorithm.HS256)   // <-- IMPORTANTE
                 .compact();
     }
-}
 
+    public String extractEmail(String token) {
+        return getClaims(token).getSubject();
+    }
+
+    public Long extractRole(String token) {
+        return getClaims(token).get("rol", Long.class);
+    }
+
+    public boolean isTokenValid(String token) {
+        try {
+            getClaims(token);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Token inválido: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private Claims getClaims(String token) {
+        JwtParser parser = Jwts.parser()
+                .verifyWith(getKey())   // API moderna de jjwt 0.12.5
+                .build();
+
+        return parser.parseSignedClaims(token).getPayload();
+    }
+}
