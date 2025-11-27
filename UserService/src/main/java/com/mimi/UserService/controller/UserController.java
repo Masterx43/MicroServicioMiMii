@@ -95,4 +95,9 @@ public class UserController {
         }
     }
 
+    @GetMapping("/by-email/{correo}")
+    public ResponseEntity<UserDTO> obtenerPorCorreo(@PathVariable String correo) {
+        return ResponseEntity.ok(userService.obtenerPorCorreo(correo).get());
+    }
+
 }

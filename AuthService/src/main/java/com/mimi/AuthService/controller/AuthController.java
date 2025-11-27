@@ -2,6 +2,8 @@ package com.mimi.AuthService.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashMap;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +62,11 @@ public class AuthController {
         }
 
         return ResponseEntity.ok("Bienvenido ADMIN ✔");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> me(HttpServletRequest request) {
+        return ResponseEntity.ok(authService.me(request));
     }
 
 }

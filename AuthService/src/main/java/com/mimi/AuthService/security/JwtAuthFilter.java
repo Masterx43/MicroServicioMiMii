@@ -5,10 +5,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -32,17 +36,25 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
 
         try {
-            // Solo valida que el token pueda parsearse
-            jwtUtil.extractEmail(token);
+            String email = jwtUtil.extractEmail(token); // valida token
+
+            // Crear Authentication para Spring Security
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(
+                            email,    // principal
+                            null,     // credentials
+                            List.of() // authorities (puedes poner roles luego)
+                    );
+
+            SecurityContextHolder.getContext().setAuthentication(authToken);
 
         } catch (Exception e) {
             System.out.println("TOKEN INVALIDO EN FILTRO: " + e.getMessage());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\":\"Token inválido o expirado\"}");
             return;
         }
 
         filterChain.doFilter(request, response);
     }
 }
+

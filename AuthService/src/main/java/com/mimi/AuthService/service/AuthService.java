@@ -1,6 +1,9 @@
 package com.mimi.AuthService.service;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -8,7 +11,10 @@ import org.springframework.web.client.RestTemplate;
 import com.mimi.AuthService.dto.LoginRequest;
 import com.mimi.AuthService.dto.LoginResponse;
 import com.mimi.AuthService.dto.UserAuthDTO;
+import com.mimi.AuthService.dto.UserDTO;
 import com.mimi.AuthService.security.JwtUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -25,37 +31,32 @@ public class AuthService {
             UserAuthDTO usuario = restTemplate.postForObject(
                     url,
                     new LoginRequest(email, password),
-                    UserAuthDTO.class
-            );
+                    UserAuthDTO.class);
 
             if (usuario == null) {
                 return new LoginResponse(
                         true,
                         "Credenciales inválidas",
                         null,
-                        null
-                );
+                        null);
             }
 
             String token = jwtUtil.generateToken(
                     usuario.getCorreo(),
-                    usuario.getRolId()
-            );
+                    usuario.getRolId());
 
             return new LoginResponse(
                     true,
                     "Login exitoso",
                     usuario,
-                    token
-            );
+                    token);
 
         } catch (HttpClientErrorException.Unauthorized e) {
             return new LoginResponse(
                     true,
                     "Credenciales inválidas",
                     null,
-                    null
-            );
+                    null);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,8 +64,36 @@ public class AuthService {
                     false,
                     "Error conectando a UserService",
                     null,
-                    null
-            );
+                    null);
         }
     }
+
+    public Object me(HttpServletRequest request) {
+
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return Map.of("error", "Token faltante");
+        }
+
+        String token = authHeader.substring(7);
+
+        try {
+            String email = jwtUtil.extractEmail(token);
+
+            String url = "http://localhost:8084/api/users/by-email/" + email;
+
+            UserDTO usuario = restTemplate.getForObject(url, UserDTO.class);
+
+            if (usuario == null) {
+                return Map.of("error", "Usuario no encontrado");
+            }
+
+            return usuario;
+
+        } catch (Exception e) {
+            return Map.of("error", "Token inválido o expirado");
+        }
+    }
+
 }

@@ -109,6 +109,11 @@ public class UserService {
         return toDTO(user);
     }
 
+    public Optional<UserDTO> obtenerPorCorreo(String correo) {
+        return userRepo.findByCorreo(correo)
+                .map(this::toDTO);
+    }
+
     private UserDTO toDTO(User u) {
         return new UserDTO(
                 u.getIdUser(),
