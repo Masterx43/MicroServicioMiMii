@@ -77,7 +77,8 @@ public class ServicioService {
                 servicio.getNombre(),
                 servicio.getDescripcion(),
                 servicio.getPrecio(),
-                servicio.getCategoria().getIdCategoria()
+                servicio.getCategoria().getIdCategoria(),
+                servicio.getImagenUrl()
         );
     }
 }

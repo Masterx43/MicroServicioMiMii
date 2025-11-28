@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mimi.ReservaService.dto.ApiResponse;
 import com.mimi.ReservaService.dto.CrearReservaRequest;
 import com.mimi.ReservaService.dto.ReservaDetalleResponse;
 import com.mimi.ReservaService.dto.ReservaResponse;
@@ -29,9 +30,12 @@ public class ReservaController {
     // Crear reserva
     @PostMapping("/crear")
     public ResponseEntity<?> crearReserva(@RequestBody CrearReservaRequest req) {
+
+        ReservaResponse reserva = reservaService.crearReserva(req); 
+        ApiResponse api = new ApiResponse<ReservaResponse>(true, 200,reserva);
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(reservaService.crearReserva(req));
+                    .body(api);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

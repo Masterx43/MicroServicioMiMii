@@ -18,7 +18,8 @@ public class Servicio {
     private String nombre;
     private String descripcion;
     private Integer precio;
-
+    private String imagenUrl;
+    
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
