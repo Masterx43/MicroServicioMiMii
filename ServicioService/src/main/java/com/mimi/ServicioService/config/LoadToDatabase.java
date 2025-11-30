@@ -22,7 +22,7 @@ public class LoadToDatabase {
     ) {
         return args -> {
 
-            if (categoriaRepo.count() == 0 && servicioRepo.count() == 0) {
+            if (servicioRepo.count() == 0) {
 
                 // ------------------------------
                 // CREAR CATEGORÍAS
