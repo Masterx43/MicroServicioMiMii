@@ -30,19 +30,9 @@ public class ReservaController {
     // ==========================================================
     // 1. CREAR RESERVA
     // ==========================================================
-    @Operation(
-        summary = "Crear una reserva",
-        description = "Crea una nueva reserva asignando usuario, trabajador y servicio."
-    )
+    @Operation(summary = "Crear una reserva", description = "Crea una nueva reserva asignando usuario, trabajador y servicio.")
     @ApiResponses({
-        @ApiResponse(
-            responseCode = "201",
-            description = "Reserva creada correctamente",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = ApiResponse.class),
-                examples = @ExampleObject(
-                    value = """
+            @ApiResponse(responseCode = "201", description = "Reserva creada correctamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class), examples = @ExampleObject(value = """
                     {
                       "success": true,
                       "code": 200,
@@ -56,27 +46,17 @@ public class ReservaController {
                         "estado": "PENDIENTE"
                       }
                     }
-                    """
-                )
-            )
-        ),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Error en los datos enviados",
-            content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(value = "\"Datos inválidos para crear la reserva\"")
-            )
-        )
+                    """))),
+            @ApiResponse(responseCode = "400", description = "Error en los datos enviados", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Datos inválidos para crear la reserva\"")))
     })
     @PostMapping("/crear")
     public ResponseEntity<?> crearReserva(
             @RequestBody CrearReservaRequest req) {
 
-        ReservaResponse reserva = reservaService.crearReserva(req); 
+        ReservaResponse reserva = reservaService.crearReserva(req);
         @SuppressWarnings("rawtypes")
         ApiResponsess api = new ApiResponsess<ReservaResponse>(true, 200, reserva);
-        
+
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(api);
         } catch (RuntimeException e) {
@@ -87,42 +67,29 @@ public class ReservaController {
     // ==========================================================
     // 2. OBTENER TODAS LAS RESERVAS CON DETALLES
     // ==========================================================
-    @Operation(
-        summary = "Listar todas las reservas con detalles",
-        description = "Devuelve todas las reservas junto con información del usuario, trabajador y servicio."
-    )
-    @ApiResponse(
-        responseCode = "200",
-        description = "Lista de reservas con detalles",
-        content = @Content(
-            mediaType = "application/json",
-            array = @ArraySchema(schema = @Schema(implementation = ReservaDetalleResponse.class)),
-            examples = @ExampleObject(
-                value = """
-                [
-                  {
-                    "idReserva": 10,
-                    "fecha": "2025-02-07",
-                    "hora": "11:00",
-                    "estado": "CONFIRMADA",
-                    "usuario": "Camila Rojas",
-                    "trabajador": "Daniel Pérez",
-                    "servicio": "Peinado Profesional"
-                  },
-                  {
-                    "idReserva": 11,
-                    "fecha": "2025-02-08",
-                    "hora": "14:30",
-                    "estado": "PENDIENTE",
-                    "usuario": "Bastián Gómez",
-                    "trabajador": "Laura Carrasco",
-                    "servicio": "Corte de Cabello"
-                  }
-                ]
-                """
-            )
-        )
-    )
+    @Operation(summary = "Listar todas las reservas con detalles", description = "Devuelve todas las reservas junto con información del usuario, trabajador y servicio.")
+    @ApiResponse(responseCode = "200", description = "Lista de reservas con detalles", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ReservaDetalleResponse.class)), examples = @ExampleObject(value = """
+            [
+              {
+                "idReserva": 10,
+                "fecha": "2025-02-07",
+                "hora": "11:00",
+                "estado": "CONFIRMADA",
+                "usuario": "Camila Rojas",
+                "trabajador": "Daniel Pérez",
+                "servicio": "Peinado Profesional"
+              },
+              {
+                "idReserva": 11,
+                "fecha": "2025-02-08",
+                "hora": "14:30",
+                "estado": "PENDIENTE",
+                "usuario": "Bastián Gómez",
+                "trabajador": "Laura Carrasco",
+                "servicio": "Corte de Cabello"
+              }
+            ]
+            """)))
     @GetMapping("/detalles")
     public ResponseEntity<?> obtenerTodas() {
         try {
@@ -136,19 +103,9 @@ public class ReservaController {
     // ==========================================================
     // 3. OBTENER RESERVA POR ID
     // ==========================================================
-    @Operation(
-        summary = "Obtener una reserva por ID",
-        description = "Devuelve toda la información principal de una reserva."
-    )
+    @Operation(summary = "Obtener una reserva por ID", description = "Devuelve toda la información principal de una reserva.")
     @ApiResponses({
-        @ApiResponse(
-            responseCode = "200",
-            description = "Reserva encontrada",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = ReservaResponse.class),
-                examples = @ExampleObject(
-                    value = """
+            @ApiResponse(responseCode = "200", description = "Reserva encontrada", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ReservaResponse.class), examples = @ExampleObject(value = """
                     {
                       "idReserva": 20,
                       "idUsuario": 3,
@@ -158,18 +115,8 @@ public class ReservaController {
                       "hora": "16:00",
                       "estado": "CONFIRMADA"
                     }
-                    """
-                )
-            )
-        ),
-        @ApiResponse(
-            responseCode = "404",
-            description = "Reserva no encontrada",
-            content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(value = "\"No existe la reserva solicitada\"")
-            )
-        )
+                    """))),
+            @ApiResponse(responseCode = "404", description = "Reserva no encontrada", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"No existe la reserva solicitada\"")))
     })
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerReserva(@PathVariable Long id) {
@@ -183,18 +130,9 @@ public class ReservaController {
     // ==========================================================
     // 4. LISTAR TODAS LAS RESERVAS (ADMIN)
     // ==========================================================
-    @Operation(
-        summary = "Listar todas las reservas (modo admin)",
-        description = "Devuelve todas las reservas registradas en el sistema."
-    )
+    @Operation(summary = "Listar todas las reservas (modo admin)", description = "Devuelve todas las reservas registradas en el sistema.")
     @ApiResponses({
-        @ApiResponse(
-            responseCode = "200",
-            description = "Lista de reservas",
-            content = @Content(
-                array = @ArraySchema(schema = @Schema(implementation = ReservaResponse.class)),
-                examples = @ExampleObject(
-                    value = """
+            @ApiResponse(responseCode = "200", description = "Lista de reservas", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReservaResponse.class)), examples = @ExampleObject(value = """
                     [
                       {
                         "idReserva": 12,
@@ -206,14 +144,8 @@ public class ReservaController {
                         "estado": "PENDIENTE"
                       }
                     ]
-                    """
-                )
-            )
-        ),
-        @ApiResponse(
-            responseCode = "204",
-            description = "No existen reservas"
-        )
+                    """))),
+            @ApiResponse(responseCode = "204", description = "No existen reservas")
     })
     @GetMapping("/all")
     public ResponseEntity<?> listarTodas() {
@@ -226,19 +158,10 @@ public class ReservaController {
     // ==========================================================
     // 5. RESERVAS POR USUARIO
     // ==========================================================
-    @Operation(
-        summary = "Obtener reservas por usuario",
-        description = "Devuelve todas las reservas asociadas a un usuario específico."
-    )
+    @Operation(summary = "Obtener reservas por usuario", description = "Devuelve todas las reservas asociadas a un usuario específico.")
     @ApiResponses({
-        @ApiResponse(
-            responseCode = "200",
-            description = "Lista encontrada",
-            content = @Content(
-                array = @ArraySchema(schema = @Schema(implementation = ReservaResponse.class))
-            )
-        ),
-        @ApiResponse(responseCode = "204", description = "El usuario no tiene reservas")
+            @ApiResponse(responseCode = "200", description = "Lista encontrada", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReservaResponse.class)))),
+            @ApiResponse(responseCode = "204", description = "El usuario no tiene reservas")
     })
     @GetMapping("/usuario/{id}")
     public ResponseEntity<?> obtenerPorUsuario(@PathVariable Long id) {
@@ -255,19 +178,10 @@ public class ReservaController {
     // ==========================================================
     // 6. DETALLE POR USUARIO
     // ==========================================================
-    @Operation(
-        summary = "Obtener reservas detalladas por usuario",
-        description = "Incluye nombre del trabajador, servicio y estado."
-    )
+    @Operation(summary = "Obtener reservas detalladas por usuario", description = "Incluye nombre del trabajador, servicio y estado.")
     @ApiResponses({
-        @ApiResponse(
-            responseCode = "200",
-            description = "Lista encontrada",
-            content = @Content(
-                array = @ArraySchema(schema = @Schema(implementation = ReservaDetalleResponse.class))
-            )
-        ),
-        @ApiResponse(responseCode = "204", description = "No hay reservas para este usuario")
+            @ApiResponse(responseCode = "200", description = "Lista encontrada", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReservaDetalleResponse.class)))),
+            @ApiResponse(responseCode = "204", description = "No hay reservas para este usuario")
     })
     @GetMapping("/usuario/detalle/{id}")
     public ResponseEntity<?> obtenerDetallePorUsuario(@PathVariable Long id) {
@@ -284,17 +198,10 @@ public class ReservaController {
     // ==========================================================
     // 7. RESERVAS POR TRABAJADOR
     // ==========================================================
-    @Operation(
-        summary = "Obtener reservas por trabajador",
-        description = "Devuelve reservas asignadas a un trabajador específico."
-    )
+    @Operation(summary = "Obtener reservas por trabajador", description = "Devuelve reservas asignadas a un trabajador específico.")
     @ApiResponses({
-        @ApiResponse(
-            responseCode = "200",
-            description = "Reservas encontradas",
-            content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReservaResponse.class)))
-        ),
-        @ApiResponse(responseCode = "204", description = "El trabajador no tiene reservas")
+            @ApiResponse(responseCode = "200", description = "Reservas encontradas", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReservaResponse.class)))),
+            @ApiResponse(responseCode = "204", description = "El trabajador no tiene reservas")
     })
     @GetMapping("/trabajador/{id}")
     public ResponseEntity<?> obtenerPorTrabajador(@PathVariable Long id) {
@@ -311,19 +218,9 @@ public class ReservaController {
     // ==========================================================
     // 8. ACTUALIZAR ESTADO RESERVA
     // ==========================================================
-    @Operation(
-        summary = "Actualizar estado de la reserva",
-        description = "Permite cambiar el estado a CONFIRMADA, COMPLETADA o CANCELADA."
-    )
+    @Operation(summary = "Actualizar estado de la reserva", description = "Permite cambiar el estado a CONFIRMADA, COMPLETADA o CANCELADA.")
     @ApiResponses({
-        @ApiResponse(
-            responseCode = "200",
-            description = "Estado actualizado",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = ReservaResponse.class),
-                examples = @ExampleObject(
-                    value = """
+            @ApiResponse(responseCode = "200", description = "Estado actualizado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ReservaResponse.class), examples = @ExampleObject(value = """
                     {
                       "idReserva": 20,
                       "idUsuario": 3,
@@ -333,18 +230,8 @@ public class ReservaController {
                       "hora": "16:00",
                       "estado": "CONFIRMADA"
                     }
-                    """
-                )
-            )
-        ),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Estado inválido",
-            content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(value = "\"Estado no permitido\"")
-            )
-        )
+                    """))),
+            @ApiResponse(responseCode = "400", description = "Estado inválido", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Estado no permitido\"")))
     })
     @PatchMapping("/{id}/estado")
     public ResponseEntity<?> actualizarEstado(
@@ -360,17 +247,10 @@ public class ReservaController {
     // ==========================================================
     // 9. DETALLE POR TRABAJADOR
     // ==========================================================
-    @Operation(
-        summary = "Obtener reservas detalladas por trabajador",
-        description = "Incluye información completa de cada reserva."
-    )
+    @Operation(summary = "Obtener reservas detalladas por trabajador", description = "Incluye información completa de cada reserva.")
     @ApiResponses({
-        @ApiResponse(
-            responseCode = "200",
-            description = "Reservas encontradas",
-            content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReservaDetalleResponse.class)))
-        ),
-        @ApiResponse(responseCode = "204", description = "No hay reservas para este trabajador")
+            @ApiResponse(responseCode = "200", description = "Reservas encontradas", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReservaDetalleResponse.class)))),
+            @ApiResponse(responseCode = "204", description = "No hay reservas para este trabajador")
     })
     @GetMapping("/trabajador/detalle/{id}")
     public ResponseEntity<?> obtenerDetallePorTrabajador(@PathVariable Long id) {
@@ -383,4 +263,39 @@ public class ReservaController {
             return ResponseEntity.internalServerError().body("Error al obtener reservas del trabajador");
         }
     }
+
+    // ==========================================================
+    // 10. CANCELAR UNA RESERVA (DELETE)
+    // ==========================================================
+    @Operation(summary = "Cancelar una reserva", description = "Permite al usuario cancelar su reserva. No elimina la reserva, solo cambia su estado a CANCELADA.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Reserva cancelada correctamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ReservaResponse.class), examples = @ExampleObject(value = """
+                    {
+                      "idReserva": 20,
+                      "idUsuario": 3,
+                      "idServicio": 5,
+                      "idTrabajador": 2,
+                      "fecha": "2025-02-09",
+                      "hora": "16:00",
+                      "estado": "CANCELADA"
+                    }
+                    """))),
+            @ApiResponse(responseCode = "404", description = "Reserva no encontrada", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "\"Reserva no encontrada\"")))
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> cancelarReserva(@PathVariable Long id) {
+        try {
+            ReservaResponse cancelada = reservaService.actualizarEstado(id, "CANCELADA");
+            return ResponseEntity.ok(cancelada);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/detalle/{id}")
+    public ResponseEntity<ReservaDetalleResponse> obtenerDetallePorId(@PathVariable Long id) {
+        ReservaDetalleResponse reserva = reservaService.obtenerReservaDetalleById(id);
+        return ResponseEntity.ok(reserva);
+    }
+
 }

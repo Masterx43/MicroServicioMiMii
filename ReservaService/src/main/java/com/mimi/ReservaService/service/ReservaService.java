@@ -137,4 +137,10 @@ public class ReservaService {
         return reservaRepo.findByIdUsuario(idUsuario)
                 .stream().map(this::mapToDetalle).toList();
     }
+
+    public ReservaDetalleResponse obtenerReservaDetalleById(Long idReserva) {
+        Optional<Reserva> reserva = reservaRepo.findById(idReserva);
+
+        return mapToDetalle(reserva.get());
+    }
 }
